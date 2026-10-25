@@ -3,4 +3,4 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/overnzbk/mypublicuni.overseashighwaystudy.com/
     - /bin/mkdir -p "$DEPLOYPATH"
-    - /bin/cp -R index.html course-details.js oh-apply.js subject-hub.js subject-hub.css university subjects "$DEPLOYPATH"
+    - /bin/cp -R index.html course-details.js oh-apply.js subject-hub.js subject-hub.css university subjects assets "$DEPLOYPATH"
