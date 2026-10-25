@@ -20,14 +20,15 @@ const levels=["Foundation","Diploma","Bachelor","Master","PhD"];const data=COURS
 const style=document.createElement("style");style.textContent=".course-pane{grid-column:1/-1;background:#fff;border:1px solid #e1e9f4;border-radius:20px;padding:25px;margin:0 0 24px}.course-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.course-tab{border:1px solid #d8e4f1;background:#f5f8fc;color:#22466e;padding:10px 13px;border-radius:10px;font:700 12px 'DM Sans',sans-serif;cursor:pointer}.course-tab.active{background:#173d77;color:#fff}.course-record{border-top:1px solid #e5edf5;padding:18px 0}.course-record h3{font-size:16px;margin:0 0 7px}.course-record p{color:#586e89;font-size:12px;line-height:1.8;margin:4px 0}.course-record a{color:#1252a1;text-decoration:underline;font-weight:700}.course-warning{background:#fff8e9;padding:14px;border-radius:9px;color:#775d2d;font-size:12px;line-height:1.7}";
 document.head.append(style);
 let area=document.createElement("section");area.id="course-details";area.className="course-pane";const host=document.querySelector(".cards");if(!host)return;
-host.insertBefore(area,host.firstChild);
-let side=document.querySelector(".side");if(side){let link=document.createElement("a");link.href="#course-details";link.id="courseMenu";link.textContent="📚 Course Details";side.insertBefore(link,side.children[1]||null)}
+host.insertBefore(area,host.children[1]||null);
+let side=document.querySelector(".side");if(side){[1,2,3].forEach(i=>side.querySelector('a[href="#section'+i+'"]')?.remove());let link=document.createElement("a");link.href="#course-details";link.id="courseMenu";link.textContent="📚 Course Details";side.insertBefore(link,side.children[1]||null)}
+document.querySelectorAll("#section1,#section2,#section3").forEach(el=>el.remove());
 let active=0;
 function draw(){const val=document.querySelector("#lang")?.value||"en",l=labels[val]||labels.en;const entries=data.filter(r=>r.level===levels[active]);area.innerHTML="";
 let heading=document.createElement("h2");heading.textContent="📚 "+l[0];area.append(heading);
 let sub=document.createElement("p");sub.className="course-warning";sub.textContent=l[8];area.append(sub);
 let tabs=document.createElement("div");tabs.className="course-tabs";levels.forEach((level,i)=>{let b=document.createElement("button");b.className="course-tab"+(i===active?" active":"");b.textContent=l[i+1];b.onclick=()=>{active=i;draw()};tabs.append(b)});area.append(tabs);
-let title=document.createElement("h3");title.textContent=entries.length?l[7-1]:l[7];area.append(title);
+let title=document.createElement("h3");title.textContent=entries.length?l[6]:l[7];area.append(title);
 if(!entries.length){let p=document.createElement("p");p.className="course-warning";p.textContent="No verified programme-level listing is published here yet. Check the university catalogue and admission office.";area.append(p)}
 entries.forEach(r=>{let a=document.createElement("article");a.className="course-record";let h=document.createElement("h3");h.textContent=r.name;a.append(h);[[l[10],r.intake],[l[11],r.fee]].forEach(([x,y])=>{let p=document.createElement("p");p.textContent=x+": "+y;a.append(p)});let n=document.createElement("p");n.textContent=r.note;a.append(n);let source=document.createElement("a");source.href=r.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent=l[12]+" ↗";a.append(source);area.append(a)});
 let official=document.createElement("p");official.className="course-warning";official.textContent="For an exhaustive list at every level, use the university's own current programme catalogue; absent levels are not asserted as unavailable.";area.append(official);
