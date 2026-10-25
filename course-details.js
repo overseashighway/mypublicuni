@@ -1,0 +1,36 @@
+/* OH course directory: explicitly sourced entries only; all other levels unverified. */
+const COURSE_DATA={
+um:[
+{level:"Foundation",name:"Foundation in Life Sciences",intake:"September 2026",fee:"Check latest international fee",source:"https://study.um.edu.my/how-to-apply",note:"International application: 3–23 August 2026 (closed)."},
+{level:"Foundation",name:"Foundation in Social Sciences",intake:"September 2026",fee:"Check latest international fee",source:"https://study.um.edu.my/how-to-apply",note:"International application: 3–23 August 2026 (closed)."},
+{level:"Diploma",name:"Diploma programmes (UMCCed; individual titles to verify)",intake:"November 2026",fee:"Confirm with UMCCed",source:"https://study.um.edu.my/how-to-apply",note:"International application deadline 19 October 2026 (closed)."},
+{level:"Bachelor",name:"Bachelor of Mechanical Engineering",intake:"Check faculty calendar",fee:"Check international fee schedule",source:"https://study.um.edu.my/how-to-apply",note:"Programme-specific eligibility and intake required."},
+{level:"Master",name:"Master programmes (coursework, mixed mode or research)",intake:"March / October depending on programme",fee:"Programme-specific",source:"https://study.um.edu.my/how-to-apply",note:"Consult faculty catalogue for exact degree names."},
+{level:"PhD",name:"Doctoral research programmes",intake:"Faculty-dependent; research application deadline 22 November 2026 on published schedule",fee:"Programme-specific",source:"https://study.um.edu.my/how-to-apply",note:"Research and mixed-mode calendars differ."}],
+utm:[
+{level:"Foundation",name:"Foundation in Physical Science",intake:"December 2026",fee:"RM 16,950 total (international, published SPACE UTM fee)",source:"https://space.utm.my/foundation/",note:"International application 5 Oct–6 Nov 2026."},
+{level:"Foundation",name:"Foundation in Life Science",intake:"December 2026",fee:"RM 16,950 total (international, published SPACE UTM fee)",source:"https://space.utm.my/foundation/",note:"International application 5 Oct–6 Nov 2026."},
+{level:"Foundation",name:"Foundation in Social Science",intake:"December 2026",fee:"RM 16,950 total (international, published SPACE UTM fee)",source:"https://space.utm.my/foundation/",note:"International application 5 Oct–6 Nov 2026."},
+{level:"Diploma",name:"Diploma programmes (individual titles to verify)",intake:"November 2026 (Malaysia applicants advertised)",fee:"Verify by course",source:"https://space.utm.my/admission-apply-now/",note:"Advertised November 2026 application is for Malaysian applicants; international eligibility not confirmed."}
+]};
+(function(){
+const uni=location.pathname.split("/").pop().replace(".html","").toLowerCase();
+const labels={en:["Course Details","Foundation","Diploma","Bachelor","Master","PhD","Officially sourced programmes","Other programmes / verify with university","Course names, fees and intake dates are not inferred; use official programme search for unavailable levels.","Programme","Intake","Fees","Source"],bn:["কোর্স ডিটেইলস","ফাউন্ডেশন","ডিপ্লোমা","ব্যাচেলর","মাস্টার্স","পিএইচডি","অফিসিয়াল উৎসে পাওয়া প্রোগ্রাম","অন্যান্য প্রোগ্রাম: বিশ্ববিদ্যালয়ে যাচাই করুন","যাচাইবিহীন কোর্স, ফি ও ইনটেক দেখানো হয়নি।","প্রোগ্রাম","ইনটেক","ফি","উৎস"],si:["පාඨමාලා විස්තර","පදනම්","ඩිප්ලෝමා","උපාධි","ශාස්ත්‍රපති","ආචාර්ය උපාධිය","නිල මූලාශ්‍ර සහිත පාඨමාලා","විශ්වවිද්‍යාලයෙන් තහවුරු කරන්න","පාඨමාලා, ගාස්තු සහ දින තහවුරු කළ යුතුය.","පාඨමාලාව","ඇතුළත් වීම","ගාස්තු","මූලාශ්‍රය"],ur:["کورس کی تفصیل","فاؤنڈیشن","ڈپلومہ","بیچلر","ماسٹرز","پی ایچ ڈی","تصدیق شدہ پروگرام","یونیورسٹی سے تصدیق کریں","غیر مصدقہ فیس یا انٹیک نہیں دکھائے گئے۔","پروگرام","انٹیک","فیس","ذریعہ"],ar:["تفاصيل البرامج","التحضيري","الدبلوم","البكالوريوس","الماجستير","الدكتوراه","برامج بمصادر رسمية","تحقق من الجامعة","لا نعرض رسوماً أو مواعيد غير مؤكدة.","البرنامج","القبول","الرسوم","المصدر"]};
+const levels=["Foundation","Diploma","Bachelor","Master","PhD"];const data=COURSE_DATA[uni]||[];
+const style=document.createElement("style");style.textContent=".course-pane{background:#fff;border:1px solid #e1e9f4;border-radius:20px;padding:25px;margin:0 0 24px}.course-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.course-tab{border:1px solid #d8e4f1;background:#f5f8fc;color:#22466e;padding:10px 13px;border-radius:10px;font:700 12px 'DM Sans',sans-serif;cursor:pointer}.course-tab.active{background:#173d77;color:#fff}.course-record{border-top:1px solid #e5edf5;padding:18px 0}.course-record h3{font-size:16px;margin:0 0 7px}.course-record p{color:#586e89;font-size:12px;line-height:1.8;margin:4px 0}.course-record a{color:#1252a1;text-decoration:underline;font-weight:700}.course-warning{background:#fff8e9;padding:14px;border-radius:9px;color:#775d2d;font-size:12px;line-height:1.7}";
+document.head.append(style);
+let area=document.createElement("section");area.id="course-details";area.className="course-pane";const host=document.querySelector(".cards");if(!host)return;
+host.parentElement.insertBefore(area,host);
+let side=document.querySelector(".side");if(side){let link=document.createElement("a");link.href="#course-details";link.id="courseMenu";link.textContent="📚 Course Details";side.insertBefore(link,side.children[1]||null)}
+let active=0;
+function draw(){const val=document.querySelector("#lang")?.value||"en",l=labels[val]||labels.en;const entries=data.filter(r=>r.level===levels[active]);area.innerHTML="";
+let heading=document.createElement("h2");heading.textContent="📚 "+l[0];area.append(heading);
+let sub=document.createElement("p");sub.className="course-warning";sub.textContent=l[8];area.append(sub);
+let tabs=document.createElement("div");tabs.className="course-tabs";levels.forEach((level,i)=>{let b=document.createElement("button");b.className="course-tab"+(i===active?" active":"");b.textContent=l[i+1];b.onclick=()=>{active=i;draw()};tabs.append(b)});area.append(tabs);
+let title=document.createElement("h3");title.textContent=entries.length?l[7-1]:l[7];area.append(title);
+if(!entries.length){let p=document.createElement("p");p.className="course-warning";p.textContent="No verified programme-level listing is published here yet. Check the university catalogue and admission office.";area.append(p)}
+entries.forEach(r=>{let a=document.createElement("article");a.className="course-record";let h=document.createElement("h3");h.textContent=r.name;a.append(h);[[l[10],r.intake],[l[11],r.fee]].forEach(([x,y])=>{let p=document.createElement("p");p.textContent=x+": "+y;a.append(p)});let n=document.createElement("p");n.textContent=r.note;a.append(n);let source=document.createElement("a");source.href=r.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent=l[12]+" ↗";a.append(source);area.append(a)});
+let official=document.createElement("p");official.className="course-warning";official.textContent="For an exhaustive list at every level, use the university's own current programme catalogue; absent levels are not asserted as unavailable.";area.append(official);
+if(side)document.querySelector("#courseMenu").textContent="📚 "+l[0];}
+document.querySelector("#lang")?.addEventListener("change",draw);draw();
+})();
